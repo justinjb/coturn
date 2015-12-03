@@ -113,7 +113,7 @@ install -m644 rpm/turnserver.sysconfig \
 sed -i -e "s/#syslog/syslog/g" \
     -e "s/#no-stdout-log/no-stdout-log/g" \
     $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}/turnserver.conf.default
-%if 0%{?el6}
+%if 0%{?el6}%{?amzn1}
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
 install -m755 rpm/turnserver.init.el \
 		$RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/turnserver
@@ -138,7 +138,7 @@ rm -rf "$RPM_BUILD_ROOT"
 		%{_datadir}/%{name} turnserver 2> /dev/null || :
 
 %post
-%if 0%{?el6}
+%if 0%{?el6}%{?amzn1}
 /sbin/chkconfig --add turnserver
 %else
 /bin/systemctl --system daemon-reload
@@ -146,7 +146,7 @@ rm -rf "$RPM_BUILD_ROOT"
 
 %preun
 if [ $1 = 0 ]; then
-%if 0%{?el6}
+%if 0%{?el6}%{?amzn1}
 	/sbin/service turnserver stop > /dev/null 2>&1
 	/sbin/chkconfig --del turnserver
 %else
@@ -172,7 +172,7 @@ fi
 %config(noreplace) %attr(0644,turnserver,turnserver) %{_sysconfdir}/%{name}/turnserver.conf
 %dir %attr(0750,turnserver,turnserver) %{_localstatedir}/run/turnserver
 %config(noreplace) %{_sysconfdir}/sysconfig/turnserver
-%if 0%{?el6}
+%if 0%{?el6}%{?amzn1}
 %config %{_sysconfdir}/rc.d/init.d/turnserver
 %else
 %config %{_unitdir}/turnserver.service
