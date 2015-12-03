@@ -14,13 +14,9 @@ BuildRequires:	hiredis-devel
 Requires:	openssl, sqlite, libevent >= 2.0.0, mysql-libs, postgresql-libs
 Requires:	hiredis, perl-DBI, perl-libwww-perl
 Requires:	telnet
-%if 0%{?el6}
+%if 0%{?el6}%{?amzn1}
 BuildRequires:	epel-release, mysql-devel
 Requires:	epel-release, mysql-libs
-%if 0%{?amzn1}
-BuildRequires:  mysql-devel
-Requires:	mysql-libs
-%endif
 %else
 BuildRequires:	mariadb-devel
 Requires: 	mariadb-libs
